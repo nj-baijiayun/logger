@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btn_test_log"
+        android:layout_width="110dp"
+        android:layout_height="45dp"
+        android:text="test Log" />
+
+    <Button
+        android:id="@+id/btn_test_http"
+        android:layout_width="110dp"
+        android:layout_height="45sp"
+        android:text="test http"
+        app:layout_constraintTop_toBottomOf="@id/btn_test_log" />
+    <Button
+        android:id="@+id/btn_test_crash"
+        android:layout_width="110dp"
+        android:layout_height="45sp"
+        android:text="test crash"
+        app:layout_constraintTop_toBottomOf="@id/btn_test_http" />
+</android.support.constraint.ConstraintLayout>

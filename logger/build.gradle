@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+//apply from: 'upload.gradle'
+apply plugin: 'com.novoda.bintray-release'  // 新增
+
+android {
+    compileSdkVersion 28
+
+
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+allprojects {
+    afterEvaluate { project ->
+        if (project.getTasksByName("releaseAndroidJavadocs", false).size() > 0) {
+            project.getTasksByName("releaseAndroidJavadocs", false)[0].enabled = false
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+//    implementation 'com.orhanobut:logger:2.2.0'
+    compileOnly 'com.squareup.okhttp3:okhttp:3.11.0'
+//    compileOnly 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+
+publish {
+    userOrg = 'njbaijiayun'        //bintray.com用户名
+    groupId = GROUP   //jcenter上的路径
+    artifactId = 'logger'   //项目名称
+    publishVersion = "1.0.5"//版本号
+    desc = 'nj baijiayun inner logger'//描述，自由填写
+}
+repositories {
+    mavenCentral()
+
+}
