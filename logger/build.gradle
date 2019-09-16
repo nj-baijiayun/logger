@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
 //apply from: 'upload.gradle'
 apply plugin: 'com.novoda.bintray-release'  // 新增
 
@@ -46,6 +48,8 @@ dependencies {
     compileOnly 'com.squareup.okhttp3:okhttp:3.11.0'
 //    compileOnly 'com.squareup.okhttp3:logging-interceptor:3.11.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_version"
+
 }
 
 publish {

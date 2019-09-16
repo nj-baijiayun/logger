@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import com.nj.baijiayun.logger.log.Logger;
 import com.nj.baijiayun.logger.printer.IPrinter;
 import com.nj.baijiayun.logger.printer.PrinterFactory;
-import com.nj.baijiayun.logger.printer.TagPrinter;
 
 import static com.nj.baijiayun.logger.utils.Utils.checkNotNull;
 

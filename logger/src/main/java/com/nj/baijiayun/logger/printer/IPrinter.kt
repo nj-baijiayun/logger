@@ -1,4 +1,4 @@
-package com.nj.baijiayun.logger.printer;
+package com.nj.baijiayun.logger.printer
 
 /**
  * @project android_lib_logger
@@ -10,8 +10,11 @@ package com.nj.baijiayun.logger.printer;
  * @time
  * @describe
  */
-public interface IPrinter {
-    String DEFAULT_TAG = "Logger";
+interface IPrinter {
 
-    void print(int priority ,String tag,String msg);
+    fun print(priority: Int, tag: String?, msg: String?)
+
+    companion object {
+        val DEFAULT_TAG = "Logger"
+    }
 }

@@ -1,6 +1,11 @@
 package com.nj.baijiayun.app;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +24,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int REQ_WRITE_STORAGE = 222;
     private Button btnTestLog;
     private Button btnTestHttp;
     private Button btnTestCrash;
@@ -28,10 +34,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Logger.setEnable(BuildConfig.DEBUG);
-        Logger.setPriority(Logger.MIN_LOG_PRIORITY);
-        Logger.setTag("[Logger]");
-        Logger.init(this);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQ_WRITE_STORAGE);
+        }else{
+            Logger.init(this, "[Logger]", BuildConfig.DEBUG, true);
+        }
 
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(Logger.getOkHttpInterceptor())
@@ -40,25 +50,13 @@ public class MainActivity extends AppCompatActivity {
                 .url("http://test.api.hdjy.zhaoyongkang.com/api/app/home/course?page=1&limit=15&grade_id=15&subject_id=&title=0&course_type=")
                 .get()
                 .build();
-//
-//        RequestBody body = new FormBody.Builder()
-//                .add("password", "123456")
-//                .add("device_id", "")
-//                .add("mobile", "18612246157")
-//                .add("device_type", "2")
-//                .build();
-//        final Request request = new Request.Builder()
-//                .url("http://39.97.232.134/api/app/login_m")
-//                .post(body)
-//                .build();
-
         btnTestLog = findViewById(R.id.btn_test_log);
         btnTestHttp = findViewById(R.id.btn_test_http);
         btnTestCrash = findViewById(R.id.btn_test_crash);
         btnTestLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Logger.d("test log");
+                Logger.e("test log");
                 Logger.dTag("tag", "test log");
             }
         });
@@ -87,5 +85,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (REQ_WRITE_STORAGE == requestCode) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Logger.init(this, "[Logger]", BuildConfig.DEBUG, true);
+            } else {
+            }
+            return;
+        }
     }
 }
