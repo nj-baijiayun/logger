@@ -1,11 +1,8 @@
 package com.nj.baijiayun.logger.printer
 
-import android.content.pm.PackageManager
 import android.os.Environment
-import android.util.Log
 import com.nj.baijiayun.logger.log.Logger
 import com.nj.baijiayun.logger.utils.Utils
-import kotlinx.coroutines.*
 import java.io.*
 import java.util.*
 
@@ -17,13 +14,8 @@ import java.util.*
  * @describe 文件错误日志，除了错误信息外还会打印部分系统信息
  */
 class FilePrinter : IPrinter {
-    val logFile: File
-    val deviceInfo: String
-
-    init {
-        logFile = File(Logger.sAppContext.getExternalFilesDir("Log"), Utils.dataTime(Date()) + ".log")
-        deviceInfo = Utils.getDeviceInfo(Logger.sAppContext)
-    }
+    private val logFile: File = File(Logger.sAppContext.getExternalFilesDir("Log"), Utils.dataTime(Date()) + ".log")
+    private val deviceInfo: String = Utils.getDeviceInfo(Logger.sAppContext)
 
     override fun print(priority: Int, tag: String?, msg: String?) {
         Logger.d("print crash")
@@ -38,9 +30,9 @@ class FilePrinter : IPrinter {
         sb.append("\r\n")
         sb.append("-------------------end-----------------------")
         sb.append("\r\n")
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            if (!logFile.getParentFile().exists()) {
-                logFile.getParentFile().mkdirs()
+        if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
+            if (!logFile.parentFile.exists()) {
+                logFile.parentFile.mkdirs()
             }
             logFile.createNewFile();
             val fw = FileWriter(logFile, true)

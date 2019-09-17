@@ -11,10 +11,5 @@ package com.nj.baijiayun.logger.printer
  * @describe
  */
 interface IPrinter {
-
     fun print(priority: Int, tag: String?, msg: String?)
-
-    companion object {
-        val DEFAULT_TAG = "Logger"
-    }
 }
