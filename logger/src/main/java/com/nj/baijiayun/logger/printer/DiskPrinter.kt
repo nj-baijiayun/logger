@@ -13,7 +13,7 @@ import java.util.*
  * @time 2019-09-10 16:44
  * @describe 文件错误日志，除了错误信息外还会打印部分系统信息
  */
-class FilePrinter : IPrinter {
+class DiskPrinter : IPrinter {
     private val logFile: File = File(Logger.sAppContext.getExternalFilesDir("Log"), Utils.dataTime(Date()) + ".log")
     private val deviceInfo: String = Utils.getDeviceInfo(Logger.sAppContext)
 

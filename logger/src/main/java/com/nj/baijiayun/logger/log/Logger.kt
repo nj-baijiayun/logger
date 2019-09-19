@@ -6,14 +6,14 @@ import android.support.annotation.MainThread
 import android.util.Log
 
 import com.nj.baijiayun.logger.intercepter.OkHttpLogInterceptor
-import com.nj.baijiayun.logger.printer.FilePrinter
+import com.nj.baijiayun.logger.printer.DiskPrinter
 import com.nj.baijiayun.logger.utils.Utils.getStackTraceString
 import com.nj.baijiayun.logger.utils.Utils.isEmpty
 
 object Logger {
 
     lateinit var sAppContext: Context
-    private var filePrinter: FilePrinter? = null
+    private var filePrinter: DiskPrinter? = null
     //==============常量================//
     private var sIsFileLogEnable: Boolean = true
     /**
@@ -162,7 +162,7 @@ object Logger {
             crashLoggerHandler!!.init()
         }
         if (fileLogEnable) {
-            filePrinter = FilePrinter()
+            filePrinter = DiskPrinter()
         }
     }
 
